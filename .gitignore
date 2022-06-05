@@ -17,3 +17,12 @@ bin/
 *.pyc
 .venv/
 vars.py
+go-live.sh
+pyvenv.cfg
+my-script1.sh
+my-script2.sh
+lib/
+bin/
+*.sqlite3
+*.pyc
+.venv/

@@ -9,8 +9,22 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-import os
 from pathlib import Path
+import os
+import dj_database_url
+
+local_db = False
+
+path_to_file = 'vars.py'
+path = Path(path_to_file)
+
+if path.is_file():
+    from vars import SECRET_CODE, DEVELOPMENT, DATABASE_URL
+    local_db = True
+else:
+    SECRET_CODE = os.environ.get('SECRET_KEY')
+    DATABASE_URL = os.environ.get('DATABASE_URL')
+    DEVELOPMENT = False
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +34,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@kp^d27xm655pgk^zq_d02r6@&g26st-!a$^vr3jz84c46*!x0'
+SECRET_KEY = SECRET_CODE
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = DEVELOPMENT
 
-ALLOWED_HOSTS = ['sturaynor.com']
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+ALLOWED_HOSTS = ['sturaynor.com', 'stu-boutique.herokuapp.com']
 
 
 # Application definition
@@ -101,11 +117,24 @@ WSGI_APPLICATION = 'boutique_ado.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+# if local_db:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': DATABASE_PATH,
+#         }
+#     }
+
+# else:
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.parse(DATABASE_URL)
 }
 
 

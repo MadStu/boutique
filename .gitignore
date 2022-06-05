@@ -16,3 +16,4 @@ bin/
 *.sqlite3
 *.pyc
 .venv/
+vars.py

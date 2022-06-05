@@ -7,3 +7,11 @@ __pycache__/
 node_modules/
 .github/
 cloudinary_python.txt
+go-live.sh
+pyvenv.cfg
+my-script1.sh
+lib/
+bin/
+*.sqlite3
+*.pyc
+.venv/
